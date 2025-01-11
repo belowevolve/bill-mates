@@ -1,0 +1,26 @@
+{
+  "name": "Bill-Mates",
+  "short_name": "Bill-Mates",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#17191c",
+  "theme_color": "#ff3f20",
+  "description": "Bill-Mates is a simple bill splitting app for your friends.",
+  "icons": [
+    {
+      "src": "pwa-64x64.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "pwa-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "pwa-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
