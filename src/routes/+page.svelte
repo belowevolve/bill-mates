@@ -16,36 +16,27 @@
   }
 </script>
 
-<div class="centered">
-  <h1>todos</h1>
+<ul>
+  {#each todos as todo (todo.id)}
+    <li
+      in:fly={{ y: 20 }}
+      out:slide
+      class="bg-card mb-2 flex items-center gap-2 rounded-md p-2 shadow-md"
+    >
+      <span class="flex-1">{todo.description}</span>
+      <button aria-label="Mark as complete" onclick={() => deleteTodo(todo.id)}></button>
+    </li>
+  {/each}
+</ul>
 
-  <form onsubmit={addTodo} use:enhance>
-    <label>
-      add a todo:
-      <input name="description" autocomplete="off" required />
-    </label>
-  </form>
-
-  <ul class="mt-4">
-    {#each todos as todo (todo.id)}
-      <li
-        in:fly={{ y: 20 }}
-        out:slide
-        class="bg-bg-1 mb-2 flex items-center gap-2 rounded-md p-2 shadow-md"
-      >
-        <span class="flex-1">{todo.description}</span>
-        <button aria-label="Mark as complete" onclick={() => deleteTodo(todo.id)}></button>
-      </li>
-    {/each}
-  </ul>
-</div>
+<form class="bg-card fixed inset-x-0 bottom-0 rounded-xl border p-4" onsubmit={addTodo} use:enhance>
+  <label class="flex items-center gap-2">
+    <span class="shrink-0">add a todo:</span>
+    <input class="w-full border-b" name="description" autocomplete="off" required />
+  </label>
+</form>
 
 <style>
-  .centered {
-    max-width: 20em;
-    margin: 0 auto;
-  }
-
   button {
     border: none;
     background: url(/remove.svg) no-repeat 50% 50%;

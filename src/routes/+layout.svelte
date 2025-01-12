@@ -1,6 +1,10 @@
 <script lang="ts">
   import '@/app.css'
+  import '@fontsource/geist-sans'
   import { onMount } from 'svelte'
+  import IconPhInvoice from '~icons/ph/invoice'
+
+  let { children } = $props()
 
   async function detectSWUpdate() {
     const registration = await navigator.serviceWorker.ready
@@ -20,8 +24,13 @@
   onMount(() => detectSWUpdate())
 </script>
 
-<slot />
-
-<svelte:head>
-  <title>Bill-Mates</title>
-</svelte:head>
+<nav class="flex items-center justify-between border-b p-4">
+  <a class="flex items-center gap-0.5" href="/">
+    <IconPhInvoice />
+    <h1>Bill-Mates</h1>
+  </a>
+  <a href="/history">History</a>
+</nav>
+<main class="p-4">
+  {@render children()}
+</main>
