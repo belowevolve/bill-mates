@@ -41,3 +41,9 @@
     @apply scroll-m-20 text-lg font-semibold tracking-tight;
   }
 }
+
+@layer components {
+  .button {
+    @apply text-primary-foreground bg-primary grid place-items-center rounded-md p-2;
+  }
+}

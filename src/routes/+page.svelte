@@ -1,14 +1,38 @@
 <script lang="ts">
-  import { enhance } from '$app/forms'
-  import { fly, slide } from 'svelte/transition'
+  import { flip } from 'svelte/animate'
+  import { fly } from 'svelte/transition'
+  import IconPhPlus from '~icons/ph/plus'
+  import IconPhTrash from '~icons/ph/trash'
 
-  let todos = $state<{ id: string; description: string }[]>([])
+  let todos = $state<{ id: string; description: string }[]>([
+    { id: 'a', description: 'a' },
+    { id: 'b', description: 'b' },
+    { id: 'c', description: 'c' },
+    { id: 'd', description: 'd' },
+    { id: 'e', description: 'e' },
+    { id: 'f', description: 'f' },
+    { id: 'g', description: 'g' },
+    { id: 'h', description: 'h' },
+    { id: 'i', description: 'i' },
+    { id: 'j', description: 'j' }
+  ])
 
   function addTodo(e: SubmitEvent) {
     e.preventDefault()
     const form = e.target as HTMLFormElement
-    todos.push({ id: crypto.randomUUID(), description: form.description.value })
+    const newTodo = {
+      id: crypto.randomUUID(),
+      description: form.description.value
+    }
+    todos.push(newTodo)
     form.reset()
+
+    setTimeout(() => {
+      const newElement = document.querySelector(
+        `[data-todo-id="${newTodo.id}"]`
+      )
+      newElement?.scrollIntoView({ behavior: 'smooth' })
+    }, 100)
   }
 
   function deleteTodo(id: string) {
@@ -16,40 +40,40 @@
   }
 </script>
 
-<ul>
-  {#each todos as todo (todo.id)}
-    <li
-      in:fly={{ y: 20 }}
-      out:slide
-      class="bg-card mb-2 flex items-center gap-2 rounded-md p-2 shadow-md"
-    >
-      <span class="flex-1">{todo.description}</span>
-      <button aria-label="Mark as complete" onclick={() => deleteTodo(todo.id)}></button>
-    </li>
-  {/each}
-</ul>
+<main class="pb-20">
+  <ul class="p-4">
+    {#each todos as todo (todo.id)}
+      <li
+        data-todo-id={todo.id}
+        in:fly={{ y: 80 }}
+        out:fly={{ x: 13, duration: 150 }}
+        animate:flip={{ duration: 200 }}
+        class="bg-card mb-2 flex items-center gap-2 rounded-md p-2 shadow-md"
+      >
+        <span class="flex-1">{todo.description}</span>
+        <button
+          class="text-muted-foreground grid size-10 place-items-center"
+          aria-label="Delete"
+          onclick={() => deleteTodo(todo.id)}
+        >
+          <IconPhTrash />
+        </button>
+      </li>
+    {/each}
+  </ul>
 
-<form class="bg-card fixed inset-x-0 bottom-0 rounded-xl border p-4" onsubmit={addTodo} use:enhance>
-  <label class="flex items-center gap-2">
-    <span class="shrink-0">add a todo:</span>
-    <input class="w-full border-b" name="description" autocomplete="off" required />
-  </label>
-</form>
-
-<style>
-  button {
-    border: none;
-    background: url(/remove.svg) no-repeat 50% 50%;
-    background-size: 1rem 1rem;
-    width: 40px;
-    cursor: pointer;
-    height: 100%;
-    aspect-ratio: 1;
-    opacity: 0.5;
-    transition: opacity 0.2s;
-  }
-
-  button:hover {
-    opacity: 1;
-  }
-</style>
+  <form
+    class="bg-card fixed bottom-0 flex w-full items-center gap-2 rounded-t-lg border p-4"
+    onsubmit={addTodo}
+  >
+    <input
+      class="w-full border-b"
+      name="description"
+      autocomplete="off"
+      required
+    />
+    <button type="submit" class="button size-10 shrink-0">
+      <IconPhPlus width={20} height={20} />
+    </button>
+  </form>
+</main>

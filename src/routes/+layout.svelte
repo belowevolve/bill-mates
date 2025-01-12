@@ -3,7 +3,6 @@
   import '@fontsource/geist-sans'
   import { onMount } from 'svelte'
   import IconPhInvoice from '~icons/ph/invoice'
-
   let { children } = $props()
 
   async function detectSWUpdate() {
@@ -31,6 +30,5 @@
   </a>
   <a href="/history">History</a>
 </nav>
-<main class="p-4">
-  {@render children()}
-</main>
+
+{@render children()}
