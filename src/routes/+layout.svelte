@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from '$app/navigation'
   import '@/app.css'
   import '@fontsource/geist-sans'
   import { onMount } from 'svelte'
@@ -21,13 +22,18 @@
   }
 
   onMount(() => detectSWUpdate())
+
+  async function newBill() {
+    const newBillId = crypto.randomUUID()
+    await goto(`/${newBillId}`)
+  }
 </script>
 
 <nav class="flex items-center justify-between border-b p-4">
-  <a class="flex items-center gap-0.5" href="/">
+  <button class="flex items-center gap-0.5" onclick={newBill}>
     <IconPhInvoice />
     <h1>Bill-Mates</h1>
-  </a>
+  </button>
   <a href="/history">History</a>
 </nav>
 
