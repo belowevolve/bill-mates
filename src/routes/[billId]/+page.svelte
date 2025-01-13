@@ -41,7 +41,7 @@
   )
 
   $effect(() => {
-    if (total === 0 || label === '') return
+    if (total === 0) return
     const bill: Bill = {
       id: data.billId,
       label,
