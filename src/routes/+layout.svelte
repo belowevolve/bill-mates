@@ -34,7 +34,7 @@
     <IconPhInvoice />
     <h1>Bill-Mates</h1>
   </button>
-  <a href="/history">History</a>
+  <a href="/">History</a>
 </nav>
 
 {@render children()}
