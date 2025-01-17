@@ -34,7 +34,7 @@
           </button> -->
         </div>
         <div class="flex gap-2">
-          <span class="text-pretty">
+          <span class="text-sm text-pretty">
             {#each Object.keys(bill.matesItems) as mate, i}
               {mate}{i === Object.keys(bill.matesItems).length - 1 ? '' : ', '}
             {/each}
