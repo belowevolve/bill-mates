@@ -176,7 +176,7 @@
     <div class="-m-1 flex gap-1 overflow-x-auto p-1 pr-13">
       {#each Object.keys(matesItems) as mate (mate)}
         <label
-          class="bg-card has-checked:ring-primary hover:border-primary has-focus-within:border-primary relative flex min-w-max cursor-pointer items-center gap-0.5 rounded-lg border p-2 pr-5 transition-all has-checked:ring"
+          class="bg-card has-checked:ring-primary has-focus-visible:border-primary hover:border-primary relative flex min-w-max cursor-pointer items-center gap-0.5 rounded-lg border p-2 pr-5 transition-all has-checked:ring"
         >
           <input
             type="checkbox"
