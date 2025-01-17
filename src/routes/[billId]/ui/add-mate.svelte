@@ -49,7 +49,7 @@
     method="dialog"
   >
     <div class="flex justify-between">
-      <h2 id="dialog-header">Add new mate</h2>
+      <h2 id="dialog-header">Add a new mate</h2>
     </div>
     <label class="sr-only" for="mateName">Mate name</label>
     <input
