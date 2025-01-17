@@ -1,50 +1,70 @@
 <script lang="ts">
+  import { getHistoryBills } from '@entities/bill'
+  import { removeStorageData } from '@utils/ls'
   import { flip } from 'svelte/animate'
   import { fade, fly } from 'svelte/transition'
-  import IconPhTrash from '~icons/ph/trash'
+  import IconPhX from '~icons/ph/x'
 
-  let bills = $state(
-    Object.keys(localStorage)
-      .map((key) => JSON.parse(localStorage.getItem(key) || '{}'))
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-  )
+  let bills = $state(getHistoryBills())
 
   function deleteBill(e: MouseEvent, id: string) {
     e.preventDefault()
-    localStorage.removeItem(`bill-${id}`)
+    removeStorageData(`bill-${id}`)
     bills = bills.filter((bill) => bill.id !== id)
   }
 </script>
 
-<main class="w-full overflow-x-hidden p-2 pb-20">
-  <ul class="flex flex-col gap-2">
-    {#each bills as bill (bill.id)}
-      <li out:fly={{ x: 13, duration: 150 }} animate:flip={{ duration: 200 }}>
-        <h2 class="text-muted-foreground text-sm">
-          {new Date(bill.createdAt).toLocaleDateString()}
-        </h2>
-        <a
-          class="bg-card flex h-10 items-center gap-2 rounded-lg border pl-2 shadow-sm"
-          href={`/${bill.id}`}
-        >
-          <span class="text-lg font-bold">{bill.label}</span>
-          <span class="ml-auto block">Total: <strong>{bill.total}</strong></span
-          >
-          <button class="button" onclick={(e) => deleteBill(e, bill.id)}>
-            <IconPhTrash />
-          </button>
-        </a>
-      </li>
-    {:else}
+<h1>History</h1>
+<ul class="flex flex-col gap-2">
+  {#each bills as bill (bill.id)}
+    <li out:fly={{ x: 13, duration: 150 }} animate:flip={{ duration: 200 }}>
       <a
-        in:fade
-        href={`/${crypto.randomUUID()}`}
-        class="text-center text-lg text-muted-foreground">Create a new bill</a
+        class="bg-card relative block rounded-lg border p-2 pr-5 shadow-sm"
+        href={`/${bill.id}`}
       >
-    {/each}
-  </ul>
+        <div class="flex items-center gap-2">
+          <span class="text-lg font-bold">
+            {bill.label ? bill.label : '...'}
+          </span>
+          <span class="ml-auto block">
+            Total: <strong>{bill.total}</strong>
+          </span>
+          <!-- <button class="button" onclick={(e) => deleteBill(e, bill.id)}>
+            <IconPhTrash />
+          </button> -->
+        </div>
+        <div class="flex gap-2">
+          <span class="text-pretty">
+            {#each Object.keys(bill.matesItems) as mate, i}
+              {mate}{i === Object.keys(bill.matesItems).length - 1 ? '' : ', '}
+            {/each}
+          </span>
+          <i class="ml-auto text-sm font-bold">
+            {new Date(bill.createdAt).toLocaleDateString()}
+          </i>
+        </div>
+        <button
+          class="text-muted-foreground absolute top-0.5 right-0.5 size-4"
+          aria-label={`Delete ${bill.label}`}
+          onclick={(e) => deleteBill(e, bill.id)}
+        >
+          <IconPhX width={16} height={16} />
+        </button>
+      </a>
+    </li>
+  {:else}
+    <a
+      in:fade
+      href={`/${crypto.randomUUID()}`}
+      class="text-center italic text-muted-foreground"
+    >
+      Create a new bill
+    </a>
+  {/each}
+</ul>
 
-  <a href={`/${crypto.randomUUID()}`} class="button fixed inset-x-2 bottom-4">
+<div class="fixed-holder">
+  <a href={`/${crypto.randomUUID()}`} class="button flex justify-center">
     Create a new bill
   </a>
-</main>
+</div>

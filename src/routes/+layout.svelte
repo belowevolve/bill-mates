@@ -29,12 +29,16 @@
   }
 </script>
 
-<nav class="flex items-center justify-between border-b p-4">
-  <button class="flex items-center gap-0.5" onclick={newBill}>
-    <IconPhInvoice />
-    <h1>Bill-Mates</h1>
-  </button>
-  <a href="/">History</a>
+<nav class="border-b p-4">
+  <div class="flex items-center justify-between">
+    <button class="gap-0.5" onclick={newBill}>
+      <IconPhInvoice />
+      <h1>Bill-Mates</h1>
+    </button>
+    <a href="/">History</a>
+  </div>
 </nav>
 
-{@render children()}
+<main class="flex w-full max-w-full flex-col gap-2 overflow-x-hidden p-4 pb-40">
+  {@render children()}
+</main>

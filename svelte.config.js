@@ -8,13 +8,12 @@ const config = {
   kit: {
     // See https://svelte.dev/docs/kit/adapters for more information about adapters.
     adapter: adapter(),
-    csrf: {
-      checkOrigin: false
-    },
+
     alias: {
       cn: 'src/shared/lib/css.ts',
       '@lib': 'src/shared/lib',
       '@ui': 'src/shared/ui',
+      '@utils': 'src/shared/utils',
       '@entities': 'src/entities',
       '@': 'src/'
     }

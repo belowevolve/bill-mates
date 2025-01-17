@@ -30,8 +30,46 @@
   }
   body {
     font-family: 'Geist Sans', sans-serif;
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground mx-auto max-w-lg;
   }
+
+  dialog {
+    @apply bg-card text-foreground m-auto w-[calc(100%-1rem)] max-w-lg rounded-xl p-4 backdrop:bg-black/50;
+  }
+
+  /* enable transitions */
+  dialog,
+  ::backdrop {
+    transition:
+      display 0.3s allow-discrete,
+      overlay 0.3s allow-discrete,
+      transform 0.3s allow-discrete,
+      opacity 0.3s;
+    opacity: 0;
+  }
+
+  /* On Stage */
+  [open],
+  [open]::backdrop {
+    opacity: 1;
+  }
+
+  [open] {
+    transform: scale(1);
+  }
+
+  /* Off Stage */
+  @starting-style {
+    [open],
+    [open]::backdrop {
+      opacity: 0;
+    }
+
+    [open] {
+      transform: scale(0.95);
+    }
+  }
+
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -41,6 +79,9 @@
     -moz-appearance: textfield;
   }
 
+  i {
+    @apply text-muted-foreground;
+  }
   h1 {
     @apply scroll-m-20 text-xl font-bold tracking-tight;
   }
@@ -48,10 +89,26 @@
   h2 {
     @apply scroll-m-20 text-lg font-semibold tracking-tight;
   }
+
+  button {
+    @apply flex cursor-pointer items-center justify-center gap-2 transition-all active:scale-[0.99];
+  }
 }
 
 @layer components {
   .button {
-    @apply hover:bg-primary/90 text-primary-foreground bg-primary flex items-center justify-center gap-2 rounded-md p-2 transition-all active:scale-[0.99];
+    @apply hover:bg-primary/90 text-primary-foreground bg-primary rounded-md p-2;
+  }
+
+  .button-ghost {
+    @apply hover:bg-accent hover:text-accent-foreground rounded-md p-2;
+  }
+
+  .input {
+    @apply h-10 w-full rounded-lg border px-2 shadow-sm;
+  }
+
+  .fixed-holder {
+    @apply bg-card fixed bottom-0 left-1/2 mx-auto w-full max-w-lg -translate-x-1/2 rounded-t-lg border px-2 py-4;
   }
 }
