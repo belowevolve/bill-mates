@@ -3,6 +3,7 @@ import type { Bill } from './types'
 
 export function getHistoryBills() {
   return Object.keys(localStorage)
+    .filter((key) => key.startsWith('bill-'))
     .map((key) =>
       getStorageData<Bill>(key, {
         id: '',
